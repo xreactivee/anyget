@@ -62,7 +62,7 @@ export function DownloaderModal({ isOpen, onClose }: DownloaderModalProps) {
         </div>
 
 
-        <div className="p-6 sm:p-10 pt-12 sm:pt-16 min-h-[400px] flex items-center">
+        <div className="p-6 sm:p-10 pt-12 sm:pt-16 min-h-100 flex items-center">
           <AnimatePresence mode="wait">
             {step === 1 && (
               <PlatformSelect
