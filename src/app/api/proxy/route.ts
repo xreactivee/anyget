@@ -3,6 +3,7 @@ import path from "path";
 import os from "os";
 import { spawn } from "child_process";
 import { Readable } from "stream";
+import { getCookiePath } from "@/lib/cookies";
 
 const ffmpegName = os.platform() === "win32" ? "ffmpeg.exe" : "ffmpeg";
 const ffmpegPath = path.join(process.cwd(), "node_modules", "ffmpeg-static", ffmpegName);
@@ -52,11 +53,13 @@ export async function GET(req: Request) {
         ytdlFormat = "ba/b";
       }
 
+      const proxyCookiePath = getCookiePath();
       const subprocess = ytdl.exec(originalUrl, {
         output: "-",
         format: ytdlFormat,
         noWarnings: true,
         noCheckCertificates: true,
+        ...(proxyCookiePath ? { cookies: proxyCookiePath } : {}),
       });
 
       const headers = new Headers();

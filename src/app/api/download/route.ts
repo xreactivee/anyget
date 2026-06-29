@@ -4,6 +4,7 @@ import path from "path";
 import os from "os";
 import ytSearch from "yt-search";
 import * as cheerio from "cheerio";
+import { getCookiePath } from "@/lib/cookies";
 
 const binaryName = os.platform() === "win32" ? "yt-dlp.exe" : "yt-dlp";
 const ytdl = create(path.join(process.cwd(), "node_modules", "youtube-dl-exec", "bin", binaryName));
@@ -48,11 +49,14 @@ export async function POST(req: Request) {
       }
     }
 
+    const cookiePath = getCookiePath();
+
     const flags: any = {
       dumpJson: true,
       noWarnings: true,
       noCheckCertificates: true,
       extractorArgs: "youtube:player-client=android,web",
+      ...(cookiePath && { cookies: cookiePath }),
     };
 
     if (type === "audio") {

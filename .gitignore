@@ -14,6 +14,9 @@
 /coverage
 /secrets
 
+# cookies (sensitive - never commit)
+*cookies*.txt
+
 # next.js
 /.next/
 /out/
